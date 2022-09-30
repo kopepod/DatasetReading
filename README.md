@@ -32,7 +32,7 @@ X = numpy.asarray(DF.iloc[:,0:-1])
 Y = DF.iloc[:,-1]
 
 for i, lbl in enumerate(Y.unique()):
-  Y.iloc[Y == lbl] = i
+  Y[:][Y == lbl] = i
 
 Y = numpy.asarray(Y)
 
