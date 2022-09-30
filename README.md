@@ -46,4 +46,9 @@ print(Y_te)
 
 
 ```
+# Running
+```
+python Main.py --File https://raw.githubusercontent.com/kopepod/DatasetReading/main/fisher_iris.csv
+```
+
 
