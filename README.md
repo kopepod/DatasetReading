@@ -16,6 +16,8 @@ import numpy
 from sklearn.model_selection import train_test_split
 import argparse
 import pandas
+from numpy import linalg as LA
+import scipy
 
 parser = argparse.ArgumentParser(description="Leer con argumentos")
 parser.add_argument("--File", type = str, required = True, help = "File path")
@@ -54,6 +56,9 @@ for x_te in X_te:
 Y_hat = numpy.asarray(Y_hat)
 
 acc = numpy.sum(Y_hat == Y_te) / len(Y_hat)
+
+print("Acc = %0.3f" %(acc))
+
 
 
 ```
