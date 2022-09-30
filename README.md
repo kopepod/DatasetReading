@@ -38,11 +38,22 @@ Y = numpy.asarray(Y)
 
 X_tr, X_te, Y_tr, Y_te = train_test_split(X, Y, test_size = 0.8, random_state = 40)
 
-print(X_tr)
-print(X_te)
+Y_hat = []
 
-print(Y_tr)
-print(Y_te)
+# k-nn
+# ------
+k = 5
+
+for x_te in X_te:
+	d = LA.norm(x_te - X_tr, axis = 1)
+	idx = numpy.argsort(d)
+	y_hat, _ = scipy.stats.mode(Y_tr[idx[0:k]])
+	Y_hat.append(y_hat[0])
+# ---
+	
+Y_hat = numpy.asarray(Y_hat)
+
+acc = numpy.sum(Y_hat == Y_te) / len(Y_hat)
 
 
 ```
