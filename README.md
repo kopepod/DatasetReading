@@ -18,6 +18,12 @@ import argparse
 import pandas
 from numpy import linalg as LA
 import scipy
+from sklearn.svm import SVC
+from sklearn.naive_bayes import GaussianNB
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
+from tqdm import tqdm
 
 parser = argparse.ArgumentParser(description="Leer con argumentos")
 parser.add_argument("--File", type = str, required = True, help = "File path")
@@ -37,30 +43,35 @@ for i, lbl in enumerate(Y.unique()):
   Y[:][Y == lbl] = i
 
 Y = numpy.asarray(Y)
+Y = Y.astype('int')
 
-X_tr, X_te, Y_tr, Y_te = train_test_split(X, Y, test_size = 0.8, random_state = 40)
+Models = {
+"SVC" : SVC(),
+"GNB": GaussianNB(),
+"KNN": KNeighborsClassifier(),
+"DTree" : DecisionTreeClassifier(),
+"RF" : RandomForestClassifier()
+}
 
-Y_hat = []
+Seeds = [0,10,40,120,400,320,570,999,1240,9999]
 
-# k-nn
-# ------
-k = 5
+Result = []
 
-for x_te in X_te:
-	d = LA.norm(x_te - X_tr, axis = 1)
-	idx = numpy.argsort(d)
-	y_hat, _ = scipy.stats.mode(Y_tr[idx[0:k]])
-	Y_hat.append(y_hat[0])
-# ---
-	
-Y_hat = numpy.asarray(Y_hat)
+for name, model in Models.items():
+	print("Testing %s " %(model))
+	for seed in tqdm(Seeds):
+		X_tr, X_te, Y_tr, Y_te = train_test_split(X, Y, test_size = 0.2, random_state = seed)
+		model.fit(X_tr,Y_tr)
+		Y_hat = model.predict(X_te)
+		acc = numpy.sum(Y_hat == Y_te)/len(Y_hat)
+		Result.append([name, seed, acc])
 
-acc = numpy.sum(Y_hat == Y_te) / len(Y_hat)
+Result = pandas.DataFrame(Result, columns = ["Model","Seed","Acc"])
+print(Result)
 
-print("Acc = %0.3f" %(acc))
-
-
-
+for name, model in Models.items():
+	sDF = Result[Result.Model == name]
+	print("Model %s : mAp %0.3f" %(name, sDF.Acc.mean()) )
 ```
 # Running
 ```
