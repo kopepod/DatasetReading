@@ -115,12 +115,12 @@ Options = parser.parse_args()
 
 print(Options)
 
-x1 = float(input("x1 = "))
-x2 = float(input("x2 = "))
-x3 = float(input("x3 = "))
-x4 = float(input("x4 = "))
+x = []
 
-x = numpy.asarray([x1,x2,x3,x4])
+for i in range(4):
+	x.append(float(input("x[%d] = " %(i))))
+
+x = numpy.asarray(x)
 
 print("input sample : ", end = "")
 print(x)
