@@ -12,6 +12,7 @@ pip install scikit-learn
 
 ## Code
 ```
+import pickle
 import numpy
 from sklearn.model_selection import train_test_split
 import argparse
@@ -27,6 +28,7 @@ from tqdm import tqdm
 
 parser = argparse.ArgumentParser(description="Leer con argumentos")
 parser.add_argument("--File", type = str, required = True, help = "File path")
+parser.add_argument("--ModelName", type = str, required = True, help = "Model File Name")
 
 Options = parser.parse_args()
 
@@ -69,9 +71,32 @@ for name, model in Models.items():
 Result = pandas.DataFrame(Result, columns = ["Model","Seed","Acc"])
 print(Result)
 
+Lista = []
+
 for name, model in Models.items():
 	sDF = Result[Result.Model == name]
+	Lista.append([name,sDF.Acc.mean()])
 	print("Model %s : mAp %0.3f" %(name, sDF.Acc.mean()) )
+
+
+Lista = pandas.DataFrame(Lista, columns = ["Model","mAp"])
+
+Lista = Lista.sort_values(by = "mAp", ascending = False);
+
+Lista = Lista.reset_index(drop=True)
+
+BestModel = Lista.at[0,"Model"];
+
+print("Best model %s" %(BestModel) )
+
+model = Models.get(BestModel)
+
+X_tr, X_te, Y_tr, Y_te = train_test_split(X, Y, test_size = 0.2, random_state = 0)
+model.fit(X_tr,Y_tr)
+
+pickle.dump( model, open( Options.ModelName, "wb" ) )
+
+
 ```
 # Running
 ```
