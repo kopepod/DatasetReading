@@ -41,6 +41,7 @@ DF = pandas.read_csv(File)
 
 X = numpy.asarray(DF.iloc[:,0:-1])
 Y = DF.iloc[:,-1]
+Classes = list(Y.unique())
 
 for i, lbl in enumerate(Y.unique()):
   Y[:][Y == lbl] = i
@@ -94,8 +95,11 @@ model = Models.get(BestModel)
 
 X_tr, X_te, Y_tr, Y_te = train_test_split(X, Y, test_size = 0.2, random_state = 0)
 model.fit(X_tr,Y_tr)
+model.Classes = Classes
 
 pickle.dump( model, open( Options.ModelName, "wb" ) )
+
+
 
 
 ```
