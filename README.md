@@ -101,7 +101,7 @@ pickle.dump( model, open( Options.ModelName, "wb" ) )
 ```
 # Running
 ```
-python Main.py --File https://raw.githubusercontent.com/kopepod/DatasetReading/main/fisher_iris.csv
+python TrainBestModel.py --File https://raw.githubusercontent.com/kopepod/DatasetReading/main/fisher_iris.csv --ModelName BestModel.p
 ```
 
 
