@@ -11,6 +11,7 @@ pip install scikit-learn
 ```
 
 ## Code
+### Training
 ```
 # TrainBestModel.py
 import pickle
@@ -99,13 +100,49 @@ model.Classes = Classes
 
 pickle.dump( model, open( Options.ModelName, "wb" ) )
 
+```
+### Testing
+```
+#TestBestModel.py
+import pickle
+import numpy
+import argparse
 
+parser = argparse.ArgumentParser(description="Load model to classify categorical samples")
+parser.add_argument("--ModelName", type = str, required = True, help = "Model File Name")
+
+Options = parser.parse_args()
+
+print(Options)
+
+x1 = float(input("x1 = "))
+x2 = float(input("x2 = "))
+x3 = float(input("x3 = "))
+x4 = float(input("x4 = "))
+
+x = numpy.asarray([x1,x2,x3,x4])
+
+print("input sample : ", end = "")
+print(x)
+
+model = pickle.load( open( Options.ModelName, "rb" ) )
+
+y_hat = model.predict(x.reshape(1,-1))
+
+label = model.Classes[y_hat[0]]
+
+print("Sample predicted class : %s" %(label))
 
 
 ```
+
 # Running
+## Training
 ```
 python TrainBestModel.py --File https://raw.githubusercontent.com/kopepod/DatasetReading/main/fisher_iris.csv --ModelName BestModel.p
 ```
-
+## Testing
+```
+python TestBestModel.py --ModelName BestModel.p
+```
 
