@@ -28,7 +28,7 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 from tqdm import tqdm
 
-parser = argparse.ArgumentParser(description="Leer con argumentos")
+parser = argparse.ArgumentParser(description="Finding best model for categorical predictions")
 parser.add_argument("--File", type = str, required = True, help = "File path")
 parser.add_argument("--ModelName", type = str, required = True, help = "Model File Name")
 
