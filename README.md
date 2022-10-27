@@ -1,13 +1,14 @@
-# DatasetReading
-Reading a dataset with python
+# Best Model
+Selecting the best model.
 
-This is the code to read a dataset and perform a split using sk-learn
+This code reads the fisher-iris dataset and select the model model via mAp.
 
 ## Dependencies
 
 install sk-learn
 ```
 pip install scikit-learn
+pip install numpy
 ```
 
 ## Code
