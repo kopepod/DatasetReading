@@ -1,7 +1,7 @@
 # Best Model
 Selecting the best model.
 
-This code reads the fisher-iris dataset and select the model model via mAp.
+This code reads the fisher-iris dataset and selects the best model model via mAp.
 
 ## Dependencies
 
