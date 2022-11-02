@@ -6,14 +6,14 @@ This code reads the fisher-iris dataset and selects the best model model via mAp
 ## Dependencies
 
 install sk-learn
-```
+```bash
 pip install scikit-learn
 pip install numpy
 ```
 
 ## Code
 ### Training
-```
+```python
 # TrainBestModel.py
 import pickle
 import numpy
@@ -139,11 +139,11 @@ print("Sample predicted class : %s" %(label))
 
 # Running
 ## Training
-```
+```bash
 python TrainBestModel.py --File https://raw.githubusercontent.com/kopepod/DatasetReading/main/fisher_iris.csv --ModelName BestModel.p
 ```
 ## Testing
-```
+```bash
 python TestBestModel.py --ModelName BestModel.p
 ```
 
